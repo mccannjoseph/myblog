@@ -4,7 +4,9 @@ var secrets = require('./config/secrets');
 var webpack = require('webpack');
 var app = express();
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/joeBlog');
+
+mongoose.connect(process.env.MONGOHQ_URL || 'mongodb://localhost/joeBlog');
+
 var db = mongoose.connection;
 db.on('error',console.error.bind(console, 'connection error:'));
 db.once('open', function(){
