@@ -4,6 +4,7 @@ var secrets = require('./config/secrets');
 var webpack = require('webpack');
 var app = express();
 var mongoose = require('mongoose');
+var passport = require('passport');
 
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/joeBlog');
 
@@ -30,11 +31,13 @@ db.once('open', function(){
 		app.use(require('webpack-hot-middleware')(compiler));
 	}
 
+	require('./config/passport')(passport); // pass passport for configuration
+
 	// Bootstrap application settings
-	require('./config/express')(app);
+	require('./config/express')(app, passport);
 
 	// Bootstrap routes
-	require('./config/routes')(app);
+	require('./config/routes')(app,passport);
 
 	app.listen(app.get('port'));
 })

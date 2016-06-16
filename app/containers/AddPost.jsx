@@ -33,6 +33,26 @@ export default class AddPost extends React.Component {
 		})
 	}
 
+
+	removePost(){
+		fetch('/api/v1/blogPosts/'+this.state.slug, {
+			method: 'DELETE',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
+			},
+			
+		})
+		.then(function(response) {
+			return response.json()
+		}).then(function(json) {
+			console.log('parsed json', json)
+		}).catch(function(ex) {
+			console.log('parsing failed', ex)
+		})
+	}
+
+
 	constructor(props){
 		super(props);
 		this.state = {
@@ -41,11 +61,13 @@ export default class AddPost extends React.Component {
 	render() {
 		return (
 			<div className={cx('home')}>
-			<h1 className={cx('home__header')}>Welcome to Sparta, Yo!</h1>
+			<h1 className={cx('home__header')}>Welcome to Joe's Blog!</h1>
 			<p>title  -<input onChange={(e)=>this.setState({title: e.target.value})} /></p>
 			<p>slug  -<input onChange={(e)=>this.setState({slug: e.target.value})} /></p>
 			<p>body  -<textarea onChange={(e)=>this.setState({body: e.target.value})} /></p>
 			<button onClick={this.submitPost.bind(this)}>submit</button>
+			<button onClick={this.removePost.bind(this)}>delete</button>
+
 			</div>
 			);
 	}

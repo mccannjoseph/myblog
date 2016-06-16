@@ -1,5 +1,6 @@
 import React from 'react';
 import 'whatwg-fetch';
+import { Link } from 'react-router'
 
 /*
  * Note: This is kept as a container-level component, 
@@ -7,6 +8,22 @@ import 'whatwg-fetch';
  *  and dispatching of actions if you decide to have any sub-components.
  */
  export default class Home extends React.Component {
+ 	constructor(props){
+ 		super(props);
+ 		this.state = {
+ 			posts:[]
+ 		};
+ 	}
+
+ 	render() {
+ 		return (
+ 			<div>
+ 				<h1>Home</h1>
+ 				<ul> {this.state.posts.map((post)=>(<Link to={"post/" + post.slug}><li>{post.title}</li></Link>))}</ul>
+ 			</div>
+ 			);
+ 	}
+
  	componentWillMount(){
  		var self = this
  		fetch('/api/v1/blogPosts') 
@@ -18,23 +35,6 @@ import 'whatwg-fetch';
  			console.log('parsing failed', ex)
  		})
  	}
- }	
+ 	
 
-
-	constructor(props){
-		super(props);
-		this.state = {
-			posts:[]
-		};
-	}
-
-  render() {
-    return (
-      <div>
-        <h1>Home</h1>
-       <ul> {this.state.posts.map((post)=>(<li>{post.title}</li>))}</ul>
-      </div>
-    );
-  }
-  
-};
+ };
