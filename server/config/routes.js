@@ -25,7 +25,12 @@ module.exports = function(app, passport) {
 
 
 
- app.post('/api/v1/login',authController.login);  
+     // process the login form
+app.post('/api/v1/login', passport.authenticate('local-login', {
+        successRedirect : '/', // redirect to the secure profile section
+        failureRedirect : '/', // redirect back to the signup page if there is an error
+        failureFlash : true // allow flash messages
+    }));  
 
  app.post('/api/v1/logout',authController.logout);  
 
@@ -50,7 +55,7 @@ app.post('/api/v1/signup', passport.authenticate('local-signup', {
 
 
  function isLoggedIn(req, res, next) {
-
+ console.log(req.isAuthenticated(),req)
     // if user is authenticated in the session, carry on 
     if (req.isAuthenticated())
         return next();
