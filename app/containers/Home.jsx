@@ -19,7 +19,7 @@ import { Link } from 'react-router'
  		return (
  			<div>
  				<h1>Home</h1>
- 				<ul> {this.state.posts.map((post)=>(<Link to={"post/" + post.slug}><li>{post.title}</li></Link>))}</ul>
+ 				<ul> {this.state.posts.map((post)=>(<Link to={"/post/" + post.slug}><li>{post.title}</li></Link>))}</ul>
  			</div>
  			);
  	}

@@ -26,7 +26,7 @@ module.exports = function(app, passport) {
 
 
      // process the login form
-app.post('/api/v1/login', passport.authenticate('local-login', {
+ app.post('/api/v1/login', passport.authenticate('local-login', {
         successRedirect : '/', // redirect to the secure profile section
         failureRedirect : '/', // redirect back to the signup page if there is an error
         failureFlash : true // allow flash messages
@@ -34,21 +34,20 @@ app.post('/api/v1/login', passport.authenticate('local-login', {
 
  app.post('/api/v1/logout',authController.logout);  
 
-app.post('/api/v1/signup', passport.authenticate('local-signup', {
+ app.post('/api/v1/signup', passport.authenticate('local-signup', {
         successRedirect : '/', // redirect to the secure profile section
         failureRedirect : '/', // redirect back to the signup page if there is an error
         failureFlash : true // allow flash messages
     }));
 
+ app.post('/api/v1/blogPosts', postController.create)
 
-
- app.post('/api/v1/blogPosts',isLoggedIn, postController.create)
-
+ 
  app.get('/api/v1/blogPosts/:slug' , postController.retrieveOne)
 
- app.delete('/api/v1/blogPosts/:slug' ,isLoggedIn,  postController.deletion)
+ app.delete('/api/v1/blogPosts/:slug' , postController.deletion)
 
- app.put('/api/v1/blogPosts/:slug' , isLoggedIn , postController.change)
+ app.put('/api/v1/blogPosts/:slug' , postController.change)
 
  app.get('/api/v1/blogPosts', postController.retrieveAll)
 
